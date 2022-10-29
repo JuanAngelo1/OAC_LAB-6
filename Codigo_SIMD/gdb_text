@@ -1,0 +1,63 @@
+nasm -f elf64 -g simd_suma_float.asm -o simd_suma_float.o -g
+ld simd_suma_float.o -o simd_suma_float
+
+gdb simd_suma_float
+---------> Para .asm
+
+
+
+
+
+
+
+nasm -f elf64 -g simd_suma_float.asm -o simd_suma_float.o -g
+gcc simd_suma_float.o simd_suma.c -o simd_suma -g
+
+gdb simd_suma
+
+---------> Para .c que contiene un .asm adentro
+//Utilizar c para ir al siguiente break point, dentro del ASM
+
+shell clear
+
+(gdb) set logging file commands.txt
+(gdb) break simd_suma_float
+Breakpoint 1 at 0x1160
+(gdb) set disassembly-flavor intel
+(gdb) run
+
+Breakpoint 1, 0x0000555555555160 in simd_suma_float ()
+(gdb) disassemble
+
+End of assembler dump.
+
+(gdb) p $xmm0.v4_
+v4_float  v4_int32  
+
+(gdb) p $xmm0.v4_
+v4_float  v4_int32  
+
+(gdb) p $xmm0.v4_float
+$1 = {2.34180515e-38, 0, 0, 0}
+
+(gdb) ni
+0x0000555555555164 in simd_suma_float ()
+(gdb) p $xmm1.v4_float
+
+$2 = {1.43240537e-16, 1.43240537e-16, 1.43240537e-16, 1.43240537e-16}
+(gdb) ni
+0x0000555555555168 in simd_suma_float ()
+(gdb) p $xmm0.v4_float
+
+
+(gdb) p $xmm1.v4_float
+$6 = {5, 6, 7, 8}
+(gdb) p $xmm0.v4_float
+$7 = {1, 2, 3, 4}
+
+(gdb) ni
+The program is not being run.
+(gdb) c
+The program is not being run.
+(gdb) q
+juan@juan-VirtualBox:~/Desktop/Programa_Clases/SIMD_GDB$ 
