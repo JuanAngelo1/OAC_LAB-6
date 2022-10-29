@@ -4,8 +4,8 @@ ld simd_suma_float.o -o simd_suma_float
 gdb simd_suma_float
 ---------> Para .asm
 
-
-
+roundps xmmo,xmmo,1 ; floor=1,ceil=2
+cvtps2dq xmm0,xmm0
 
 
 
